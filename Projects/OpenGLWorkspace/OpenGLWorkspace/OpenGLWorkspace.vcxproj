@@ -119,6 +119,7 @@
   <ItemGroup>
     <ClInclude Include="glad.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="shader.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="OpenGLWorkspace.rc" />
@@ -126,10 +127,13 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\glad\src\glad.c" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\vertex_shader.vert" />
+    <None Include="fragment.frag" />
+    <None Include="vertex.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

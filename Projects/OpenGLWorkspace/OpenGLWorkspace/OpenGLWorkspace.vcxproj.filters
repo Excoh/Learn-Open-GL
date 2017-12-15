@@ -21,6 +21,9 @@
     <ClInclude Include="glad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="OpenGLWorkspace.rc">
@@ -37,10 +40,19 @@
     <ClCompile Include="Color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\vertex_shader.vert">
       <Filter>Source Files</Filter>
+    </None>
+    <None Include="vertex.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="fragment.frag">
+      <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
 </Project>

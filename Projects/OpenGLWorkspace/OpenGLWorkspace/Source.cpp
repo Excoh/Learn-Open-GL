@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 
+#include "shader.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
@@ -281,6 +282,13 @@ void DrawCustomShader()
 		0.33f, -0.33f, 0.0f,
 		0.0f,  0.33f, 0.0f
 	};
+
+	float verticesWithColor[] = {
+		// positions         // colors
+		0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right, red
+		-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left, green
+		0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top, blue
+	};
 #pragma endregion
 
 #pragma region Generate Buffer Object and Array Objects
@@ -295,66 +303,33 @@ void DrawCustomShader()
 	glGenBuffers(1, &EBO);
 #pragma endregion
 
-#pragma region Create, compile, and link vertex and fragment shaders
+#pragma region Create, compile, and link vertex and fragment shaders in custom shader class
 
-	const char* vertexShaderSource;
-	unsigned int vertexShader;
-	const char* fragmentShaderSource;
-	unsigned int fragmentShader;
-
-	unsigned int shaderProgram;
-	shaderProgram = glCreateProgram();
-
-	vertexShaderSource = "#version 330 core\n"
-		"layout(location = 0) in vec3 aPos;"
-		""
-		"void main()"
-		"{"
-		"gl_Position = vec4(aPos, 1.0);"
-		"}";
-	vertexShader = glCreateShader(GL_VERTEX_SHADER);
-
-	fragmentShaderSource = "#version 330 core\n"
-		"out vec4 FragColor;"
-		""
-		"void main()"
-		"{"
-		"FragColor = vec4(0.25f, 0.5f, 0.2f, 1.0f);"
-		"}";
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-
-	// attach the created shaders above to the shader program and link it 
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-
-	// Debug for the shader program
-	int  success;
-	char infoLog[512];
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (!success) {
-		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
+	Shader customShader("vertex.vert", "fragment.frag");
 
 #pragma endregion
+
+	float timeValue = glfwGetTime();
+	float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
+	verticesWithColor[3] = greenValue;
+	verticesWithColor[10] = greenValue;
+	verticesWithColor[17] = greenValue * 2;
 
 #pragma region Bind Buffers and Draw
 	// 0. bind vertex array object (VAO)
 	glBindVertexArray(VAO);
 	// 1. copy our vertices array in a buffer for OpenGL to use
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(triangleVertices), triangleVertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesWithColor), verticesWithColor, GL_STATIC_DRAW);
 	// 2. then set the vertex attributes pointers
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 	// 3. use our shader program when we want to render an object
-	glUseProgram(shaderProgram);
+	//glUseProgram(shaderProgram);
+	//glUniform4f(vertexColorLocation, greenValue, 0.0f, 0.0f, 1.0f);
+	customShader.use();
 	glBindVertexArray(VAO);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
