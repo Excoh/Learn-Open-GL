@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Excel\Documents\Graphics Learning\glfw-3.2.1\examples\particles.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Excel\Documents\Graphics Learning\glfw-3.2.1\deps\tinycthread.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Excel\Documents\Graphics Learning\glfw-3.2.1\deps\getopt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Excel\Documents\Graphics Learning\glfw-3.2.1\deps\glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\Excel\Documents\Graphics Learning\glfw-3.2.1\deps\tinycthread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Excel\Documents\Graphics Learning\glfw-3.2.1\deps\getopt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Excel\Documents\Graphics Learning\glfw-3.2.1\deps\glad\glad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Excel\Documents\Graphics Learning\glfw-3.2.1\examples\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="C:\Users\Excel\Documents\Graphics Learning\glfw-3.2.1\examples\glfw.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{D4D6B138-05C7-3CB2-A43B-285626B8041B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{CA49E12F-BEFD-321D-BCA8-EDC7CCBF8072}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Excel\Documents\Graphics Learning\glfw-3.2.1\CMakeLists.txt" />
+    <CustomBuild Include="C:\Users\Excel\Documents\Graphics Learning\build\CMakeFiles\087cce88d6abd5861fb1d28207b622b5\uninstall.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\Excel\Documents\Graphics Learning\build\CMakeFiles\uninstall" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{1BF3AF88-D8F8-3A7E-9724-1F24A2F98496}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
