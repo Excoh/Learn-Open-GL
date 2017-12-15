@@ -43,7 +43,6 @@ CTestTestfile.cmake
 *.lai
 *.la
 *.a
-*.lib
 
 # Executables
 *.exe
