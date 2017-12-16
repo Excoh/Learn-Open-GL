@@ -6,6 +6,9 @@
 
 #include "shader.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 void DrawAcrossTriangle(GLFWwindow* window);
@@ -330,12 +333,35 @@ void DrawCustomShader()
 	//glUseProgram(shaderProgram);
 	//glUniform4f(vertexColorLocation, greenValue, 0.0f, 0.0f, 1.0f);
 	customShader.use();
+	customShader.setFloat("horizontalOffset", 0.0f);
 	glBindVertexArray(VAO);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);	// unbind current vertex array object (VAO)
 #pragma endregion
+}
+
+void DrawTexture()
+{
+	glClearColor(0.5f, 0.75f, 0.1f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	float triangleVertices[] = 
+	{
+		-0.33f, -0.33f, 0.0f,
+		0.33f, -0.33f, 0.0f,
+		0.0f,  0.33f, 0.0f
+	};
+
+	// texture coordinates range from (0,0) of lower left to (1,1) of upper right 
+	float textureCoordinates[] =
+	{
+		0.0f, 0.0f,  // lower-left corner  
+		1.0f, 0.0f,  // lower-right corner
+		0.5f, 1.0f   // top-center corner
+	};
+
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)

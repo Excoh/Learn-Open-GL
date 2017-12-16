@@ -131,7 +131,6 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\vertex_shader.vert" />
     <None Include="fragment.frag" />
     <None Include="vertex.vert" />
   </ItemGroup>
