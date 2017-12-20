@@ -51,5 +51,11 @@
     <None Include="fragment.frag">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="texVert.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="texFrag.frag">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
