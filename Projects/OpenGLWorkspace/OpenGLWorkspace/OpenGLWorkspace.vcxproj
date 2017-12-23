@@ -134,6 +134,8 @@
     <None Include="fragment.frag" />
     <None Include="texFrag.frag" />
     <None Include="texVert.vert" />
+    <None Include="transformFrag.frag" />
+    <None Include="transformVert.vert" />
     <None Include="vertex.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

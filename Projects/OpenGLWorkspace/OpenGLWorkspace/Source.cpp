@@ -3,7 +3,9 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
-
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include "shader.h"
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -61,7 +63,9 @@ int main()
 	//	glfwPollEvents();
 	//}
 
-	DrawTexture(window);
+	//DrawTexture(window);
+
+	DrawTransformation(window);
 
 	glfwTerminate();
 
@@ -350,8 +354,6 @@ void DrawCustomShader()
 
 void DrawTexture(GLFWwindow* window)
 {
-	
-
 	// contains position, color and texture values
 	float triangleVertices[] = 
 	{
@@ -438,7 +440,7 @@ void DrawTexture(GLFWwindow* window)
 	shader.setInt("ourTexture", 0);
 	shader.setInt("ourTexture2", 1);
 	while (!glfwWindowShouldClose(window))
-	{
+	{	
 		// input
 		processInput(window);
 
@@ -488,13 +490,110 @@ void DrawTexture(GLFWwindow* window)
 		glfwPollEvents();
 	}
 	
-
-	
 }
 
 void DrawTransformation(GLFWwindow* window)
 {
+	glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
+	glm::mat4 identity;
+	glm::mat4 translation;
 
+	translation = glm::translate(identity, glm::vec3(1.0f, 1.0f, 0.0f));
+	vec = translation * vec;
+	std::cout << vec.x << vec.y << vec.z << std::endl;
+
+	glm::mat4 trans;
+	trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
+	trans = glm::scale(trans, glm::vec3(1) * 0.5f);
+
+	float squareVertices[] =
+	{
+		// position				// color		// texture coords
+		0.5f, 0.5f, 0.0f,		1,1,1,			1.0f, 1.0f,		// top right
+		0.5f, -0.5f, 0.0f,		1,1,1,			1.0f, 0.0f,		// bottom right
+		-0.5f, -0.5f, 0.0f,		1,1,1,			0.0f, 0.0f,		// bottom left
+		-0.5f, 0.5f, 0.0f,		1,1,1,			0.0, 1.0f		// top left
+	};
+	int squareIndices[] =
+	{
+		0, 1, 3,
+		1, 2, 3
+	};
+
+	Shader shader("transformVert.vert", "transformFrag.frag");
+
+	unsigned int VAO;
+	unsigned int VBO; // vertex buffer object
+	unsigned int EBO; // element buffer object
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
+
+	glBindVertexArray(VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(squareVertices), squareVertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(squareIndices), squareIndices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+
+	stbi_set_flip_vertically_on_load(true);
+
+	int width, height, nrChannels;
+	unsigned char *data = stbi_load("moon-texture.png", &width, &height, &nrChannels, 0);
+
+	//unsigned int texture;
+	//glGenTextures(1, &texture);
+
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, texture); // bind the texture to the current state
+
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	//if (data)
+	//{
+	//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+	//	glGenerateMipmap(GL_TEXTURE_2D);
+	//}
+	//else
+	//{
+	//	std::cout << "Failed to load texture." << std::endl;
+	//}
+	//stbi_image_free(data);
+
+	shader.use();
+	while (!glfwWindowShouldClose(window))
+	{
+		// input
+		processInput(window);
+
+		// render loop
+		glClearColor(0.5f, 0.75f, 0.1f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		//glActiveTexture(GL_TEXTURE0);
+		//glBindTexture(GL_TEXTURE_2D, texture);
+
+		shader.use();
+		glBindVertexArray(VAO);
+		//glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
+
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+	}
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
